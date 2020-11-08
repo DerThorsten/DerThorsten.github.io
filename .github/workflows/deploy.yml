@@ -19,18 +19,21 @@ jobs:
     # checkout the repo    
     - uses: actions/checkout@v1
 
-    # add node js
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-
+    # caching
     - name: Setup cache
       id: cache-system-libraries
       uses: actions/cache@v2
       with:
         path: ${{env.EM_CACHE_FOLDER}}
         key: ${{env.EM_VERSION}}-${{ runner.os }}
+
+    # add node js
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    # add emscripten
     - uses: mymindstorm/setup-emsdk@v7
       with:
         version: ${{env.EM_VERSION}}
