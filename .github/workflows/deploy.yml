@@ -10,18 +10,37 @@ jobs:
       matrix:
         node-version: [12.x]
     steps:
+    
+    # checkout the repo    
     - uses: actions/checkout@v1
+
+    # add node js
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - uses: lovasoa/setup-emscripten@master
-    - with:
-      emscripten-version: '1.38.47'
+
+    # add emscripten
+    - name: Use emscripten
+      uses: lovasoa/setup-emscripten@master
+      with:
+        emscripten-version: '1.38.47'
+
+    # add cmake
+    - name: Setup cmake
+      uses: jwlawson/actions-setup-cmake@v1.4
+      with:
+        cmake-version: '3.16.x'
+
+    # install npm dependencies
     - name: Install Packages
       run: npm install
+
+    # build the react app
     - name: Build page
       run: npm run build
+
+    # deploy the build dir 
     - name: Deploy to gh-pages
       uses: peaceiris/actions-gh-pages@v3
       with:
