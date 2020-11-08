@@ -22,9 +22,7 @@ jobs:
 
     # add emscripten
     - name: Use emscripten
-      uses: lovasoa/setup-emscripten@master
-      with:
-        emscripten-version: '1.38.47'
+      uses: mymindstorm/setup-emsdk@v7
 
     # add cmake
     - name: Setup cmake
